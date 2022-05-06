@@ -1,7 +1,10 @@
+import { Ship } from 'src/ship/entities/ship.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,8 +14,13 @@ export class CrewMember {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  // other columns
+  @Column({ type: 'varchar', length: 50 })
+  name: string;
+
+  @ManyToOne(() => Ship)
+  @JoinColumn({ name: 'ship_id' })
+  ship: Ship;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

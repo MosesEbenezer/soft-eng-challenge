@@ -1,7 +1,12 @@
+import { CrewMember } from 'src/crew-member/entities/crew-member.entity';
+import { MotherShip } from 'src/mother-ship/entities/mother-ship.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,7 +17,17 @@ export class Ship {
   id: number;
 
   @Column()
-  // other columns
+  name: string;
+
+  @ManyToOne(() => MotherShip)
+  @JoinColumn({ name: 'mother_ship_id' })
+  mother_ship: MotherShip;
+
+  @OneToMany(() => CrewMember, (crew_member) => crew_member.ship, {
+    cascade: ['insert', 'update', 'remove'],
+  })
+  crew_members: Ship[];
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

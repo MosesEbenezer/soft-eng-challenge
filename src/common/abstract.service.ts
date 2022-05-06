@@ -19,27 +19,6 @@ export abstract class AbstractService {
     return await this.respository.find(search);
   }
 
-  async paginateOld(page = 1): Promise<paginatedResult> {
-    const take = 15;
-
-    const [data, total] = await this.respository.findAndCount({
-      take,
-      skip: (page - 1) * take,
-      order: {
-        created_at: 'DESC',
-      },
-    });
-
-    return {
-      data: data,
-      meta: {
-        total,
-        page,
-        last_page: Math.ceil(total / take),
-      },
-    };
-  }
-
   async paginate(
     page = 1,
     per_page: number,

@@ -21,8 +21,12 @@ export class MotherShipController {
   constructor(private readonly motherShipService: MotherShipService) {}
 
   @Post()
-  create(@Body() createMotherShipDto: CreateMotherShipDto) {
-    return this.motherShipService.create(createMotherShipDto);
+  async create(@Body() createMotherShipDto: CreateMotherShipDto) {
+    const mother_ship = await this.motherShipService.createMotherShip(
+      createMotherShipDto,
+    );
+
+    return { data: mother_ship };
   }
 
   @Get()
