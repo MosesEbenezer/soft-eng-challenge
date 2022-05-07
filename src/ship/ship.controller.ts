@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UpdateShipDto } from './dto/update-ship.dto';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 import { AddCrewMemberDto } from './dto/add-crew-member.dto';
+import { SwitchCrewMemberDto } from './dto/switch-crew-member.dto';
 
 @ApiTags('Ship')
 @UseInterceptors(ResponseInterceptor)
@@ -34,6 +35,12 @@ export class ShipController {
   @Patch('/add/crewmember')
   async addCrewMemberToShip(@Body() addCrewMemberDto: AddCrewMemberDto) {
     const ship = await this.shipService.addCrewMemberToShip(addCrewMemberDto);
+    return { data: ship };
+  }
+
+  @Patch('/switch/crewmember')
+  async switchCrewMember(@Body() switchCrewMemberDto: SwitchCrewMemberDto) {
+    const ship = await this.shipService.switchCrewMember(switchCrewMemberDto);
     return { data: ship };
   }
 

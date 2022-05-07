@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AbstractService } from 'src/common/abstract.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,5 +11,14 @@ export class CrewMemberService extends AbstractService {
     private readonly crewMemberRepo: Repository<CrewMember>,
   ) {
     super(crewMemberRepo);
+  }
+
+  async findCrewMemberByName(name: string) {
+    const crew_member = await this.findOne({
+      name,
+    });
+
+    if (!crew_member) throw new NotFoundException('Crew Member Not Found');
+    return crew_member;
   }
 }

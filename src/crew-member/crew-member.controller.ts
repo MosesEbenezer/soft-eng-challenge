@@ -19,13 +19,13 @@ export class CrewMemberController {
 
   @Get()
   async findAll() {
-    const crew_members = await this.crewMemberService.findAll();
+    const crew_members = await this.crewMemberService.findAll(['ship']);
     return { data: crew_members };
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const crew_member = await this.crewMemberService.findOne(+id);
+    const crew_member = await this.crewMemberService.findOne(+id, ['ship']);
     return { data: crew_member };
   }
 

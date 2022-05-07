@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { isArray } from 'class-validator';
 import { Repository } from 'typeorm';
 import { paginatedResult } from './paginated-result.interface';
 
@@ -42,13 +41,14 @@ export abstract class AbstractService {
     };
   }
 
-  async findOne(condition: any, relations?: any): Promise<any> {
+  async findOne(condition: any, relations?: string[]): Promise<any> {
+    console.log('condition', condition);
     let data: any;
 
     if (relations) {
       data = await this.respository.findOne({
-        condition,
-        relations: isArray(relations) ? relations : [`${relations}`],
+        where: condition,
+        relations: relations ? relations : null,
         order: {
           createdAt: 'DESC',
         },
@@ -91,7 +91,6 @@ export abstract class AbstractService {
       data = await this.respository.findOne(condition);
     }
     return data;
-    // return await this.respository.findOne(condition);
   }
 
   async update(id: number, data: any): Promise<any> {
