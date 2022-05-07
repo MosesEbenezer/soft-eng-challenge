@@ -14,4 +14,7 @@ export class CrewMemberService extends AbstractService {
   ) {
     super(crewMemberRepo);
   }
+
+  // Given that the officer wants to add a crew member, when he sends the name of the member and the ship he wants to add,
+  // then the crew member is added if the ship contains less than 5 crew members;
 }

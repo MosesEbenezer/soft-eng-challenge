@@ -1,6 +1,7 @@
 import {
   Injectable,
   NotAcceptableException,
+  NotFoundException,
   NotImplementedException,
 } from '@nestjs/common';
 import { AbstractService } from 'src/common/abstract.service';
@@ -8,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMotherShipDto } from './dto/create-mother-ship.dto';
 import { MotherShip } from './entities/mother-ship.entity';
 import { Repository } from 'typeorm';
+import { AddShipToMotherShipDto } from './dto/add-ship-to-mothership.dto';
 
 @Injectable()
 export class MotherShipService extends AbstractService {
@@ -19,36 +21,60 @@ export class MotherShipService extends AbstractService {
   }
 
   async createMotherShip(createMotherShipDto: CreateMotherShipDto) {
-    const { mother_ship_name } = createMotherShipDto;
+    const { mothership_name } = createMotherShipDto;
     await this.validateExisting(createMotherShipDto);
 
     const ships = await this.prepareShips();
-    const mother_ship = await this.create({
-      mother_ship_name,
+
+    const mothership = await this.create({
+      mother_ship_name: mothership_name,
       ships,
     });
 
-    if (!mother_ship)
+    if (!mothership)
       throw new NotImplementedException('Mother Ship Creation Failed');
 
-    return mother_ship;
+    return mothership;
+  }
+
+  async addShipToMotherShip(addShipToMotherShipDto: AddShipToMotherShipDto) {
+    const { mothership_id, number_of_ships } = addShipToMotherShipDto;
+
+    const mothership = await this.findMotherShip({ id: mothership_id });
+    await this.validateCapacity(mothership, number_of_ships);
+
+    const ships = await this.prepareShips(number_of_ships);
+
+    mothership.ships = [...mothership.ships, ...ships];
+
+    // return mothership.ships;
+
+    // console.log('mothership.ships', mothership.ships);
+
+    const updated_mothership = this.motherShipRepo.save(mothership);
+
+    // const updated_mothership = await this.update(mothership.id, {
+    //   ships: ships,
+    // });/
+
+    return updated_mothership;
   }
 
   async validateExisting(createMotherShipDto: CreateMotherShipDto) {
-    const { mother_ship_name } = createMotherShipDto;
+    const { mothership_name } = createMotherShipDto;
 
-    const mother_ship = await this.findOne({
-      mother_ship_name,
+    const mothership = await this.findOne({
+      mother_ship_name: mothership_name,
     });
 
-    if (mother_ship)
+    if (mothership)
       throw new NotAcceptableException(
         'Mother Ship Name Already Exist, Update Instead',
       );
   }
 
-  async prepareShips() {
-    const initial_ships = 3;
+  async prepareShips(number_of_ships?: number) {
+    const initial_ships = number_of_ships || 3;
 
     const crew_members = await this.prepareCrewMembers();
     const ships_array = await this.prepareArray(
@@ -60,8 +86,8 @@ export class MotherShipService extends AbstractService {
     return ships_array;
   }
 
-  async prepareCrewMembers() {
-    const initial_crew_members = 3;
+  async prepareCrewMembers(crew_number?: number) {
+    const initial_crew_members = crew_number || 3;
 
     const crew_members_array = await this.prepareArray(
       initial_crew_members,
@@ -86,11 +112,36 @@ export class MotherShipService extends AbstractService {
     return array;
   }
 
-  async validateCapacity() {
-    //
+  async validateCapacity(mothership: MotherShip, number_of_ships: number) {
+    const existing_ships = mothership.ships.length;
+    const mothership_capacity = mothership.capacity;
+
+    if (existing_ships >= mothership_capacity) {
+      throw new NotAcceptableException(
+        'More ships Cannot Be Added To Mothership. It Is Already At Full Capacity',
+      );
+    }
+
+    if (existing_ships + number_of_ships > mothership_capacity) {
+      throw new NotAcceptableException(
+        `Mothership Capacity Exceeded!. Only ${
+          mothership_capacity - existing_ships
+        } more ships can be added to mother ship`,
+      );
+    }
   }
 
   async getUniqueName(prefix: string) {
     return `${prefix}${Math.floor(Math.random() * 1004 * 2121)}`;
+  }
+
+  async findMotherShip(condition: unknown) {
+    const mothership = await this.findOne(condition, [
+      'ships',
+      'ships.crew_members',
+    ]);
+    if (!mothership) throw new NotFoundException('Mother Ship Not Found');
+
+    return mothership;
   }
 }

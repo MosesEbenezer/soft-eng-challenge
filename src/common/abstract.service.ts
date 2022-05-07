@@ -51,12 +51,10 @@ export abstract class AbstractService {
 
     if (relations) {
       data = await this.respository.findOne({
-        where: {
-          condition,
-          relations: isArray(relations) ? relations : [`${relations}`],
-          order: {
-            created_at: 'DESC',
-          },
+        condition,
+        relations: isArray(relations) ? relations : [`${relations}`],
+        order: {
+          createdAt: 'DESC',
         },
       });
     } else {

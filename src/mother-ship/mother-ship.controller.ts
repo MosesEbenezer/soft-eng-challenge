@@ -13,6 +13,7 @@ import { CreateMotherShipDto } from './dto/create-mother-ship.dto';
 import { UpdateMotherShipDto } from './dto/update-mother-ship.dto';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 import { ApiTags } from '@nestjs/swagger';
+import { AddShipToMotherShipDto } from './dto/add-ship-to-mothership.dto';
 
 @ApiTags('Mother Ship')
 @UseInterceptors(ResponseInterceptor)
@@ -21,34 +22,51 @@ export class MotherShipController {
   constructor(private readonly motherShipService: MotherShipService) {}
 
   @Post()
-  async create(@Body() createMotherShipDto: CreateMotherShipDto) {
-    const mother_ship = await this.motherShipService.createMotherShip(
+  async createMotherShip(@Body() createMotherShipDto: CreateMotherShipDto) {
+    const mothership = await this.motherShipService.createMotherShip(
       createMotherShipDto,
     );
 
-    return { data: mother_ship };
+    return { data: mothership };
   }
 
   @Get()
-  findAll() {
-    return this.motherShipService.findAll();
+  async findAll() {
+    const motherships = await this.motherShipService.findAll();
+    return { data: motherships };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.motherShipService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const mothership = await this.motherShipService.findMotherShip({ id });
+    return { data: mothership };
+  }
+
+  @Patch('add/ship/')
+  async addShipToMotherShip(
+    @Body() addShipToMotherShipDto: AddShipToMotherShipDto,
+  ) {
+    const mothership = await this.motherShipService.addShipToMotherShip(
+      addShipToMotherShipDto,
+    );
+
+    return { data: mothership };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateMotherShipDto: UpdateMotherShipDto,
   ) {
-    return this.motherShipService.update(+id, updateMotherShipDto);
+    const mothership = await this.motherShipService.update(+id, {
+      ...updateMotherShipDto,
+    });
+
+    return { data: mothership };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.motherShipService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.motherShipService.remove(+id);
   }
 }

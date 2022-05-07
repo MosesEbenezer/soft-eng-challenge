@@ -13,4 +13,8 @@ export class ShipService extends AbstractService {
   ) {
     super(shipRepo);
   }
+
+  // Given that the officer wants to remove a ship, when he tries he send which ship he wants to remove, then the ship will be removed along with all its crew members
+
+  // When the officer tries to add more ships or crew members over the capacities, then an error is raised pointing out what is wrong
 }

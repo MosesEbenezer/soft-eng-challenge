@@ -18,8 +18,12 @@ export class MotherShip {
 
   @OneToMany(() => Ship, (ship) => ship.mother_ship, {
     cascade: ['insert', 'update', 'remove'],
+    onDelete: 'CASCADE',
   })
   ships: Ship[];
+
+  @Column({ default: 9 })
+  capacity: number;
 
   @CreateDateColumn({
     type: 'timestamp',

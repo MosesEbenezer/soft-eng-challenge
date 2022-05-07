@@ -5,5 +5,5 @@ export class CreateMotherShipDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  mother_ship_name: string;
+  mothership_name: string;
 }

@@ -25,8 +25,12 @@ export class Ship {
 
   @OneToMany(() => CrewMember, (crew_member) => crew_member.ship, {
     cascade: ['insert', 'update', 'remove'],
+    onDelete: 'CASCADE',
   })
-  crew_members: Ship[];
+  crew_members: CrewMember[];
+
+  @Column({ default: 5 })
+  capacity: number;
 
   @CreateDateColumn({
     type: 'timestamp',
