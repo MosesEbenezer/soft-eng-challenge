@@ -28,7 +28,7 @@ Ships has Mana CrewMembers.
 - Given that the officer wants to remove a ship, when he tries he send which ship he wants to remove, then the ship will be removed along with all its crew members - DONE
 - Given that the officer wants to add a crew member, when he sends the name of the member and the ship he wants to add, then the crew member is added if the ship contains less than 5 crew members - DONE
 - When the officer tries to add more ships or crew members over the capacities, then an error is raised pointing out what is wrong - DONE
-- Given that the officer wants to switch a crew member between the ships, when he sends the from_ship and the to_ship and the name of the crew member, then the action will be allowed only if the to_ship will not exceed the capacity
+- Given that the officer wants to switch a crew member between the ships, when he sends the from_ship and the to_ship and the name of the crew member, then the action will be allowed only if the to_ship will not exceed the capacity - DONE
 ### Definition of Done
 Complete the following checklist
 1. Use the [Django Styleguide](https://github.com/HackSoftware/Django-Styleguide) as reference
