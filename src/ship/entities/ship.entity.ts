@@ -19,13 +19,14 @@ export class Ship {
   @Column()
   name: string;
 
-  @ManyToOne(() => MotherShip)
+  @ManyToOne(() => MotherShip, (mothership) => mothership.ships, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'mother_ship_id' })
   mother_ship: MotherShip;
 
   @OneToMany(() => CrewMember, (crew_member) => crew_member.ship, {
     cascade: ['insert', 'update', 'remove'],
-    onDelete: 'CASCADE',
   })
   crew_members: CrewMember[];
 

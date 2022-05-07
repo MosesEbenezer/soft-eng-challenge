@@ -26,9 +26,11 @@ export class MotherShipService extends AbstractService {
 
     const ships = await this.prepareShips();
 
+    console.log('ships prepared', ships);
+
     const mothership = await this.create({
       mother_ship_name: mothership_name,
-      ships,
+      ships: ships,
     });
 
     if (!mothership)
@@ -42,20 +44,10 @@ export class MotherShipService extends AbstractService {
 
     const mothership = await this.findMotherShip({ id: mothership_id });
     await this.validateCapacity(mothership, number_of_ships);
-
     const ships = await this.prepareShips(number_of_ships);
 
     mothership.ships = [...mothership.ships, ...ships];
-
-    // return mothership.ships;
-
-    // console.log('mothership.ships', mothership.ships);
-
     const updated_mothership = this.motherShipRepo.save(mothership);
-
-    // const updated_mothership = await this.update(mothership.id, {
-    //   ships: ships,
-    // });/
 
     return updated_mothership;
   }
@@ -83,6 +75,7 @@ export class MotherShipService extends AbstractService {
       crew_members,
     );
 
+    console.log('ships array', ships_array);
     return ships_array;
   }
 
@@ -91,7 +84,7 @@ export class MotherShipService extends AbstractService {
 
     const crew_members_array = await this.prepareArray(
       initial_crew_members,
-      'member',
+      'crewmember',
     );
 
     return crew_members_array;

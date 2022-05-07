@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -10,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ShipService } from './ship.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateShipDto } from './dto/create-ship.dto';
 import { UpdateShipDto } from './dto/update-ship.dto';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
 
@@ -20,24 +18,22 @@ import { ResponseInterceptor } from 'src/common/interceptors/response.intercepto
 export class ShipController {
   constructor(private readonly shipService: ShipService) {}
 
-  @Post()
-  create(@Body() createShipDto: CreateShipDto) {
-    return this.shipService.create(createShipDto);
-  }
-
   @Get()
-  findAll() {
-    return this.shipService.findAll();
+  async findAll() {
+    const ships = await this.shipService.findAll();
+    return { data: ships };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shipService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const ship = await this.shipService.findOne(+id, ['crew_members']);
+    return { data: ship };
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShipDto: UpdateShipDto) {
-    return this.shipService.update(+id, updateShipDto);
+  async update(@Param('id') id: string, @Body() updateShipDto: UpdateShipDto) {
+    const ship = await this.shipService.update(+id, updateShipDto);
+    return { data: ship };
   }
 
   @Delete(':id')

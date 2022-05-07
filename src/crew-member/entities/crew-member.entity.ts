@@ -17,7 +17,9 @@ export class CrewMember {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  @ManyToOne(() => Ship)
+  @ManyToOne(() => Ship, (ship) => ship.crew_members, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'ship_id' })
   ship: Ship;
 
