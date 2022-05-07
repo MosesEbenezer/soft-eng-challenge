@@ -11,6 +11,7 @@ import { ShipService } from './ship.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateShipDto } from './dto/update-ship.dto';
 import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
+import { AddCrewMemberDto } from './dto/add-crew-member.dto';
 
 @ApiTags('Ship')
 @UseInterceptors(ResponseInterceptor)
@@ -20,13 +21,19 @@ export class ShipController {
 
   @Get()
   async findAll() {
-    const ships = await this.shipService.findAll();
+    const ships = await this.shipService.findAll(['crew_members']);
     return { data: ships };
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const ship = await this.shipService.findOne(+id, ['crew_members']);
+    const ship = await this.shipService.findShip(+id);
+    return { data: ship };
+  }
+
+  @Patch('/add/crewmember')
+  async addCrewMemberToShip(@Body() addCrewMemberDto: AddCrewMemberDto) {
+    const ship = await this.shipService.addCrewMemberToShip(addCrewMemberDto);
     return { data: ship };
   }
 

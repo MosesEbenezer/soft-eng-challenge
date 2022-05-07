@@ -11,10 +11,6 @@ export abstract class AbstractService {
     return await this.respository.save(data);
   }
 
-  async findAll(): Promise<any[]> {
-    return await this.respository.find();
-  }
-
   async findAllWithSearch(search: any): Promise<any[]> {
     return await this.respository.find(search);
   }
@@ -63,7 +59,7 @@ export abstract class AbstractService {
     return data;
   }
 
-  async findAllV2(relations?: Array<string>, query?: any): Promise<any[]> {
+  async findAll(relations?: Array<string>, query?: any): Promise<any[]> {
     let data: any;
 
     if (relations) {
