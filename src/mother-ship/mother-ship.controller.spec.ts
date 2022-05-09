@@ -91,6 +91,4 @@ describe('MotherShipController', () => {
       });
     });
   });
-
-  // nest
 });
