@@ -3,14 +3,14 @@ import {
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
-import { AbstractService } from 'src/common/abstract.service';
+import { AbstractService } from '../common/abstract.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Ship } from './entities/ship.entity';
 import { AddCrewMemberDto } from './dto/add-crew-member.dto';
 import { SwitchCrewMemberDto } from './dto/switch-crew-member.dto';
-import { CrewMemberService } from 'src/crew-member/crew-member.service';
-import { CrewMember } from 'src/crew-member/entities/crew-member.entity';
+import { CrewMemberService } from '../crew-member/crew-member.service';
+import { CrewMember } from '../crew-member/entities/crew-member.entity';
+import { Ship } from './entities/ship.entity';
 
 @Injectable()
 export class ShipService extends AbstractService {

@@ -10,7 +10,7 @@ import {
 import { ShipService } from './ship.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateShipDto } from './dto/update-ship.dto';
-import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
+import { ResponseInterceptor } from '../common/interceptors/response.interceptor';
 import { AddCrewMemberDto } from './dto/add-crew-member.dto';
 import { SwitchCrewMemberDto } from './dto/switch-crew-member.dto';
 

@@ -5,11 +5,18 @@ import { CrewMemberService } from './crew-member.service';
 describe('CrewMemberController', () => {
   let controller: CrewMemberController;
 
+  const mockCrewMemberService = {
+    ///
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CrewMemberController],
       providers: [CrewMemberService],
-    }).compile();
+    })
+      .overrideProvider(CrewMemberService)
+      .useValue(mockCrewMemberService)
+      .compile();
 
     controller = module.get<CrewMemberController>(CrewMemberController);
   });

@@ -73,7 +73,7 @@ describe('MotherShipController', () => {
       expect(await controller.findAll()).toEqual({
         data: [
           {
-            id: Date.now(),
+            id: expect.any(Number),
             mothership_name: 'Alpha',
           },
         ],
@@ -85,7 +85,7 @@ describe('MotherShipController', () => {
     it('should return one mothership', async () => {
       expect(await controller.findOne('1')).toEqual({
         data: {
-          id: Date.now(),
+          id: expect.any(Number),
           mothership_name: 'Alpha',
         },
       });

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AbstractService } from 'src/common/abstract.service';
+import { AbstractService } from '../common/abstract.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CrewMember } from './entities/crew-member.entity';

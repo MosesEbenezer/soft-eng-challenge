@@ -6,7 +6,7 @@ import {
   Param,
   UseInterceptors,
 } from '@nestjs/common';
-import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
+import { ResponseInterceptor } from '../common/interceptors/response.interceptor';
 import { CrewMemberService } from './crew-member.service';
 import { UpdateCrewMemberDto } from './dto/update-crew-member.dto';
 import { ApiTags } from '@nestjs/swagger';
