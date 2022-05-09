@@ -11,7 +11,7 @@ import {
 import { MotherShipService } from './mother-ship.service';
 import { CreateMotherShipDto } from './dto/create-mother-ship.dto';
 import { UpdateMotherShipDto } from './dto/update-mother-ship.dto';
-import { ResponseInterceptor } from 'src/common/interceptors/response.interceptor';
+import { ResponseInterceptor } from '../common/interceptors/response.interceptor';
 import { ApiTags } from '@nestjs/swagger';
 import { AddShipToMotherShipDto } from './dto/add-ship-to-mothership.dto';
 
@@ -67,6 +67,7 @@ export class MotherShipController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.motherShipService.remove(+id);
+    await this.motherShipService.remove(+id);
+    return { data: 'deleted' };
   }
 }

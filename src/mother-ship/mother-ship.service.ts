@@ -4,7 +4,7 @@ import {
   NotFoundException,
   NotImplementedException,
 } from '@nestjs/common';
-import { AbstractService } from 'src/common/abstract.service';
+import { AbstractService } from '../common/abstract.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMotherShipDto } from './dto/create-mother-ship.dto';
 import { MotherShip } from './entities/mother-ship.entity';

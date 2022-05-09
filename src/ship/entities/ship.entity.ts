@@ -1,5 +1,5 @@
-import { CrewMember } from 'src/crew-member/entities/crew-member.entity';
-import { MotherShip } from 'src/mother-ship/entities/mother-ship.entity';
+import { CrewMember } from '../../crew-member/entities/crew-member.entity';
+import { MotherShip } from '../../mother-ship/entities/mother-ship.entity';
 import {
   Column,
   CreateDateColumn,

@@ -1,4 +1,4 @@
-import { Ship } from 'src/ship/entities/ship.entity';
+import { Ship } from '../../ship/entities/ship.entity';
 import {
   Column,
   CreateDateColumn,
