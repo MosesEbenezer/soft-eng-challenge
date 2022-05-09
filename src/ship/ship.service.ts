@@ -8,9 +8,9 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddCrewMemberDto } from './dto/add-crew-member.dto';
 import { SwitchCrewMemberDto } from './dto/switch-crew-member.dto';
-import { CrewMemberService } from '../crew-member/crew-member.service';
 import { CrewMember } from '../crew-member/entities/crew-member.entity';
 import { Ship } from './entities/ship.entity';
+import { CrewMemberService } from '../crew-member/crew-member.service';
 
 @Injectable()
 export class ShipService extends AbstractService {

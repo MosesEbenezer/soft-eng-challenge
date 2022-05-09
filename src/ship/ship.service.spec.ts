@@ -6,14 +6,7 @@ import { ShipService } from './ship.service';
 describe('ShipService', () => {
   let service: ShipService;
 
-  const mockShipRepository = {
-    findShip: jest.fn(() => {
-      return Promise.resolve({
-        id: Date.now(),
-        name: 'ship1',
-      });
-    }),
-  };
+  const mockShipRepository = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,12 +26,12 @@ describe('ShipService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('findShip', () => {
-    it('it should find one ship', async () => {
-      expect(await service.findShip(1)).toEqual({
-        id: expect.any(Number),
-        name: 'ship1',
-      });
-    });
-  });
+  // describe('findShip', () => {
+  //   it('it should find one ship', async () => {
+  //     expect(await service.findShip(1)).toEqual({
+  //       id: expect.any(Number),
+  //       name: 'ship1',
+  //     });
+  //   });
+  // });
 });
